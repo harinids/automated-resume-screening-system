@@ -16,14 +16,28 @@ An automated Applicant Tracking System (ATS) that evaluates resumes against job 
 
 ## Project Structure
 
-```text
-ATS_Gemini_Project/
-├── app.py              # Main Streamlit application
-├── requirements.txt    # Python dependencies
-├── README.md           # Project documentation
-├── .gitignore          # Git ignore rules
-├── .env                # Environment variables (not committed)
-└── venv/               # Virtual environment (ignored)
+## Project Structure
+
+The project is intentionally kept simple and easy to understand.
+
+- `app.py`  
+  Contains the complete Streamlit application including resume upload, ATS scoring logic, and AI-based feedback.
+
+- `requirements.txt`  
+  Lists all Python dependencies required to run the application.
+
+- `README.md`  
+  Documentation explaining the purpose, setup steps, and usage of the project.
+
+- `.gitignore`  
+  Ensures virtual environments and sensitive files are not committed to GitHub.
+
+- `.env`  
+  Stores the Gemini API key locally (not pushed to GitHub).
+
+- `venv/`  
+  Local Python virtual environment used during development.
+
 
 
 ## How to Run the Project
@@ -43,9 +57,17 @@ ATS_Gemini_Project/
 
 5. Run the application:
    streamlit run app.py
+
 ## Purpose
 
 This project demonstrates how Applicant Tracking Systems (ATS) evaluate resumes
 using keyword matching, relevance scoring, and NLP-style text analysis.
 It is built as a learning and portfolio project.
+
+## Development Notes
+
+This project was built incrementally by experimenting with keyword matching logic and gradually enhancing it using AI-based insights.  
+The focus was on understanding how real Applicant Tracking Systems filter resumes rather than building a production-ready product.
+
+The application was tested locally using Streamlit before being pushed to GitHub.
 
