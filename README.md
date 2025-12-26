@@ -14,16 +14,16 @@ An automated Applicant Tracking System (ATS) that evaluates resumes against job 
 - NLP (keyword-based analysis)
 - Git & GitHub
 
+
 ## Project Structure
 
 ATS_Gemini_Project/
-│
-├── app.py                # Main Streamlit application
-├── requirements.txt      # Python dependencies
-├── README.md             # Project documentation
-├── .gitignore            # Ignored files for Git
-├── .env                  # Environment variables (not pushed)
-└── venv/                 # Virtual environment (ignored)
+├── app.py                 # Main Streamlit application
+├── requirements.txt       # Python dependencies
+├── README.md              # Project documentation
+├── .gitignore             # Git ignore rules
+├── .env                   # Environment variables (not committed)
+└── venv/                  # Virtual environment (ignored)
 
 ## How to Run the Project
 
