@@ -1,28 +1,30 @@
 import os
-from dotenv import load_dotenv
-
 import streamlit as st
 from PyPDF2 import PdfReader
 from google import genai
 
+# ------------------------------
+# Configuration
+# ------------------------------
+st.set_page_config(
+    page_title="Enterprise ATS Analyzer",
+    layout="wide"
+)
 
-"""
-Enterprise ATS Resume Analyzer
-Evaluates resume compatibility against job descriptions
-using ATS-style keyword matching and Gemini AI insights.
-"""
-
-
-load_dotenv()
+# ------------------------------
+# Load API Key (Cloud + Local)
+# ------------------------------
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
 if not API_KEY:
-    st.error("GOOGLE_API_KEY is missing. Please check your environment variables.")
+    st.error("GOOGLE_API_KEY is missing. Please add it in Streamlit Secrets.")
     st.stop()
 
 client = genai.Client(api_key=API_KEY)
 
-
+# ------------------------------
+# Helper Functions
+# ------------------------------
 def extract_resume_text(uploaded_file):
     reader = PdfReader(uploaded_file)
     text = ""
@@ -49,23 +51,24 @@ def calculate_ats_score(job_description, resume_text):
 
 def get_gemini_response(prompt):
     response = client.models.generate_content(
-        model="gemini-flash-latest",
-        contents=prompt
+        model="gemini-1.5-flash",
+        contents=[
+            {
+                "role": "user",
+                "parts": [{"text": prompt}]
+            }
+        ]
     )
     return response.text
 
-
-st.set_page_config(
-    page_title="Enterprise ATS Analyzer",
-    layout="wide"
-)
-
+# ------------------------------
+# UI
+# ------------------------------
 st.markdown(
     "<h2 style='margin-bottom:0'>ATS Resume Analysis Dashboard</h2>"
     "<p style='color:gray'>Enterprise-style resume evaluation using ATS logic and AI</p>",
     unsafe_allow_html=True
 )
-
 
 with st.sidebar:
     st.markdown("### Application Controls")
@@ -76,7 +79,6 @@ with st.sidebar:
     st.write("- Streamlit")
     st.write("- Gemini AI")
     st.write("- ATS Keyword Scoring")
-
 
 left, right = st.columns(2)
 
@@ -95,7 +97,9 @@ with right:
 
 analyze = st.button("Run ATS Analysis", use_container_width=True)
 
-
+# ------------------------------
+# Analysis Logic
+# ------------------------------
 if analyze:
     if not job_description or not uploaded_file:
         st.warning("Both job description and resume are required.")
@@ -110,7 +114,6 @@ if analyze:
     )
 
     st.divider()
-
     st.markdown("### ATS Compatibility Overview")
 
     m1, m2, m3 = st.columns(3)
@@ -137,7 +140,6 @@ if analyze:
             st.success("No major missing skills detected.")
 
     st.divider()
-
     st.markdown("### AI Recruiter Evaluation")
 
     ai_prompt = f"""
@@ -160,5 +162,4 @@ if analyze:
         ai_response = get_gemini_response(ai_prompt)
 
     st.write(ai_response)
-
     st.success("ATS analysis completed successfully.")
